@@ -7,7 +7,6 @@
     <title>Unity Web Player | {{{ PRODUCT_NAME }}}</title>
 
     <style>
-        /* Simple header label */
         #custom-webgl-template-label {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 18px;
@@ -27,11 +26,9 @@
 
             z-index: 9999;
             pointer-events: none;
-            /* doesn't block clicks on canvas */
             user-select: none;
         }
 
-        /* Optional: keep body clean */
         body {
             text-align: center;
             padding: 0;
@@ -48,7 +45,6 @@
 </head>
 
 <body>
-    <!-- Added label -->
     <div id="custom-webgl-template-label">Custom WebGL Template</div>
 
     <canvas id="unity-canvas" width={{{ WIDTH }}} height={{{ HEIGHT }}} tabindex="-1"
@@ -63,7 +59,6 @@
     <script src="Build/{{{ LOADER_FILENAME }}}"></script>
     <script>
         if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            // Mobile device style: fill the whole browser client area with the game canvas:
             var meta = document.createElement('meta');
             meta.name = 'viewport';
             meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
@@ -76,13 +71,11 @@
 
             document.body.style.textAlign = "left";
 
-            // Keep label in a nicer place on mobile (optional)
             var label = document.getElementById("custom-webgl-template-label");
             label.style.top = "8px";
             label.style.fontSize = "16px";
 
             #if SHOW_DIAGNOSTICS
-            // position the diagnostics icon in the corner on the canvas
             let diagnostics_icon = document.getElementById("diagnostics-icon");
             diagnostics_icon.style.position = "fixed";
             diagnostics_icon.style.bottom = "10px";
@@ -108,8 +101,6 @@
             companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
             productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
             productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
-        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
       }).then((unityInstance) => {
                 #if SHOW_DIAGNOSTICS
                 document.getElementById("diagnostics-icon").onclick = () => {
