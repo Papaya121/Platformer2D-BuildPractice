@@ -8,6 +8,7 @@ public static class BuildAll
 {
     private const string DESKTOP_DIR = "Builds/Desktop";
     private const string ANDROID_DIR = "Builds/Android";
+    private const string WEBGL_DIR = "Builds/WebGL";
     private const string GAME_NAME = "Platformer2D";
 
     [MenuItem("Build/Build All")]
@@ -20,12 +21,12 @@ public static class BuildAll
 
         if (scenes.Length == 0)
         {
-            Debug.LogError("Нет сцен в Build Settings/Build Profiles. Добавь и включи хотя бы одну сцену.");
             return;
         }
 
         BuildForDesktop(scenes);
         BuildForAndroid(scenes);
+        BuildForWebGL(scenes);
 
         Debug.Log("Build All: готово.");
     }
@@ -78,6 +79,26 @@ public static class BuildAll
 
         var report = BuildPipeline.BuildPlayer(options);
         LogReport("Android", report);
+    }
+
+    private static void BuildForWebGL(string[] scenes)
+    {
+        EnsureDir(WEBGL_DIR);
+
+        EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.WebGL, BuildTarget.WebGL);
+
+        var path = $"{WEBGL_DIR}/{GAME_NAME}";
+
+        var options = new BuildPlayerOptions
+        {
+            scenes = scenes,
+            locationPathName = path,
+            target = BuildTarget.WebGL,
+            options = BuildOptions.None
+        };
+
+        var report = BuildPipeline.BuildPlayer(options);
+        LogReport("WebGL", report);
     }
 
     private static void EnsureDir(string dir)
